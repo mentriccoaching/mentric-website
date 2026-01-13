@@ -174,7 +174,7 @@ export default function Home() {
   return (
     <div className="overflow-hidden">
       {/* Hero Section - Compact */}
-      <section className="relative pt-8 pb-12 lg:pt-12 lg:pb-16 bg-gradient-to-b from-slate-50 to-white">
+      <section className="relative pt-8 pb-6 lg:pt-12 lg:pb-8 bg-gradient-to-b from-slate-50 to-white">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left - Copy */}
@@ -227,7 +227,7 @@ export default function Home() {
       </section>
 
       {/* Three Feature Buckets */}
-      <section className="py-14 lg:py-20 bg-white">
+      <section className="py-14 lg:py-20 bg-slate-50">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center mb-10">
             <h2 className="text-2xl lg:text-3xl font-semibold text-gray-900 mb-3">
@@ -277,7 +277,7 @@ export default function Home() {
       </section>
 
       {/* Goal Journey Stages */}
-      <section className="py-14 lg:py-20 bg-slate-50">
+      <section className="py-14 lg:py-20 bg-white">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center mb-10">
             <h2 className="text-2xl lg:text-3xl font-semibold text-gray-900 mb-3">
@@ -309,7 +309,7 @@ export default function Home() {
       </section>
 
       {/* AI Section */}
-      <section className="py-14 lg:py-20 bg-white">
+      <section className="py-14 lg:py-20 bg-slate-50">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-violet-100 text-violet-700 rounded-full px-3 py-1 text-sm font-medium mb-4">
@@ -335,7 +335,7 @@ export default function Home() {
       </section>
 
       {/* For Coaches & Organisations */}
-      <section className="py-14 lg:py-20 bg-slate-50">
+      <section className="py-14 lg:py-20 bg-white">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white rounded-2xl p-6 lg:p-8 border border-gray-200">
