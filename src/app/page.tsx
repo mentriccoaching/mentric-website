@@ -217,8 +217,8 @@ export default function Home() {
                 <SessionCard />
               </div>
               
-              {/* Analytics card - overlapping bottom right of pipeline */}
-              <div className="absolute bottom-0 right-4 lg:right-8 z-10 transform hover:scale-105 transition-transform">
+              {/* Analytics card - overlapping bottom left of pipeline */}
+              <div className="absolute bottom-[-10px] left-[-10px] lg:left-[-20px] z-10 transform hover:scale-105 transition-transform">
                 <AnalyticsCard />
               </div>
             </div>
