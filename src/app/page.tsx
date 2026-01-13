@@ -218,7 +218,7 @@ export default function Home() {
               </div>
               
               {/* Analytics card - overlapping bottom left of pipeline */}
-              <div className="absolute bottom-[-10px] left-[-10px] lg:left-[-20px] z-10 transform hover:scale-105 transition-transform">
+              <div className="absolute bottom-[60px] left-[-10px] lg:left-[-20px] z-10 transform hover:scale-105 transition-transform">
                 <AnalyticsCard />
               </div>
             </div>
