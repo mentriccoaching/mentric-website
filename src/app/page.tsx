@@ -206,19 +206,19 @@ export default function Home() {
             </div>
 
             {/* Right - Overlapping UI previews */}
-            <div className="relative h-[340px] lg:h-[380px]">
-              {/* Main pipeline - bottom layer */}
-              <div className="absolute top-8 left-0 right-0 lg:right-[-20px]">
+            <div className="relative h-[320px] lg:h-[350px]">
+              {/* Main pipeline - base layer */}
+              <div className="absolute top-6 left-0 right-0 lg:right-[-20px]">
                 <GoalPipelinePreview />
               </div>
               
               {/* Session card - floating top right */}
-              <div className="absolute top-0 right-0 lg:right-4 z-10 transform hover:scale-105 transition-transform">
+              <div className="absolute top-0 right-0 lg:right-[-10px] z-10 transform hover:scale-105 transition-transform">
                 <SessionCard />
               </div>
               
-              {/* Analytics card - floating bottom left */}
-              <div className="absolute bottom-0 left-0 lg:left-4 z-10 transform hover:scale-105 transition-transform">
+              {/* Analytics card - overlapping bottom right of pipeline */}
+              <div className="absolute bottom-0 right-4 lg:right-8 z-10 transform hover:scale-105 transition-transform">
                 <AnalyticsCard />
               </div>
             </div>
