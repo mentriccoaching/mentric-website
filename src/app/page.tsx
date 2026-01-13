@@ -11,111 +11,220 @@ import {
   MessageSquare,
   FileText,
   ArrowRight,
-  Play
+  Lightbulb,
+  Heart,
+  Trophy,
+  Video,
+  ClipboardCheck
 } from 'lucide-react'
 
-// Mock Goal Pipeline visualization component
-function GoalPipeline() {
+// Goal Pipeline Preview - styled like the actual platform
+function GoalPipelinePreview() {
   const stages = [
-    { name: 'Committed', color: 'bg-blue-500', goals: 2 },
-    { name: 'Active', color: 'bg-violet-500', goals: 3 },
-    { name: 'Flowing', color: 'bg-emerald-500', goals: 2 },
-    { name: 'Natural', color: 'bg-amber-500', goals: 1 },
+    { name: 'Curious', icon: Lightbulb, color: 'blue', bgColor: 'bg-blue-100', textColor: 'text-blue-600' },
+    { name: 'Committed', icon: Target, color: 'purple', bgColor: 'bg-purple-100', textColor: 'text-purple-600' },
+    { name: 'Active', icon: Zap, color: 'amber', bgColor: 'bg-amber-100', textColor: 'text-amber-600' },
+    { name: 'Flowing', icon: Heart, color: 'pink', bgColor: 'bg-pink-100', textColor: 'text-pink-600' },
+    { name: 'Natural', icon: Trophy, color: 'green', bgColor: 'bg-green-100', textColor: 'text-green-600' },
   ]
 
-  const mockGoals = [
-    { title: 'Lead weekly team standups with confidence', stage: 0 },
-    { title: 'Delegate effectively to direct reports', stage: 0 },
-    { title: 'Give constructive feedback in the moment', stage: 1 },
-    { title: 'Active listening in 1:1 meetings', stage: 1 },
-    { title: 'Manage energy throughout the day', stage: 1 },
-    { title: 'Morning reflection practice', stage: 2 },
-    { title: 'Weekly planning ritual', stage: 2 },
-    { title: 'Daily inbox zero', stage: 3 },
+  const goals = [
+    { stage: 0, title: 'Improve public speaking', confidence: 25 },
+    { stage: 0, title: 'Learn time management', confidence: 15 },
+    { stage: 1, title: 'Build leadership presence', confidence: 45 },
+    { stage: 1, title: 'Strategic thinking', confidence: 40 },
+    { stage: 2, title: 'Difficult conversations', confidence: 65 },
+    { stage: 2, title: 'Executive presence', confidence: 70 },
+    { stage: 3, title: 'Delegate effectively', confidence: 82 },
+    { stage: 4, title: 'Active listening', confidence: 95 },
+    { stage: 4, title: 'Decision making', confidence: 100 },
   ]
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 overflow-hidden">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-            <span className="text-sm font-medium text-gray-600">SA</span>
-          </div>
-          <div>
-            <p className="text-sm font-medium text-gray-900">Sarah Anderson</p>
-            <p className="text-xs text-gray-500">Leadership Development Journey</p>
-          </div>
+    <div className="bg-white rounded-xl shadow-2xl border border-gray-200 p-4 overflow-hidden">
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <h3 className="text-sm font-semibold text-gray-900">Goals</h3>
+          <p className="text-xs text-gray-500">Drag goals between stages to track progress</p>
         </div>
-        <div className="flex items-center gap-2 text-xs text-gray-500">
-          <span className="flex items-center gap-1">
-            <Target className="w-3 h-3" />
-            8 goals
-          </span>
-          <span className="flex items-center gap-1">
-            <CheckCircle className="w-3 h-3 text-emerald-500" />
-            1 natural
-          </span>
+        <div className="flex items-center gap-1.5 bg-blue-50 text-blue-700 px-2 py-1 rounded-lg">
+          <Target className="w-3 h-3" />
+          <span className="text-xs font-medium">9 Active</span>
+        </div>
+      </div>
+      
+      <div className="flex gap-2 overflow-x-auto pb-2">
+        {stages.map((stage, stageIndex) => {
+          const Icon = stage.icon
+          const stageGoals = goals.filter(g => g.stage === stageIndex)
+          
+          return (
+            <div key={stage.name} className="flex-1 min-w-[120px]">
+              <div className="bg-gray-50 rounded-lg border border-gray-100 h-full">
+                <div className="p-2">
+                  <div className="bg-white rounded-md border border-gray-100 p-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <div className={`p-1 rounded ${stage.bgColor}`}>
+                          <Icon className={`h-3 w-3 ${stage.textColor}`} />
+                        </div>
+                        <span className="text-xs font-medium text-gray-700">{stage.name}</span>
+                      </div>
+                      <span className="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded-full">
+                        {stageGoals.length}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="px-2 pb-2 space-y-1.5">
+                  {stageGoals.map((goal, i) => (
+                    <div key={i} className="bg-white rounded-md border border-gray-100 p-2">
+                      <p className="text-[11px] font-medium text-gray-800 mb-1.5 line-clamp-2">{goal.title}</p>
+                      <div className="flex items-center gap-1.5">
+                        <div className="flex-1 h-1 bg-gray-100 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-blue-500 rounded-full" 
+                            style={{ width: `${goal.confidence}%` }}
+                          />
+                        </div>
+                        <span className="text-[9px] text-gray-500">{goal.confidence}%</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+// Session Report Preview
+function SessionReportPreview() {
+  return (
+    <div className="bg-white rounded-xl shadow-2xl border border-gray-200 p-4">
+      <div className="flex items-center gap-2 mb-4">
+        <div className="w-8 h-8 rounded-lg bg-violet-100 text-violet-600 flex items-center justify-center">
+          <Sparkles className="w-4 h-4" />
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-gray-900">Session Complete</p>
+          <p className="text-xs text-gray-500">AI insights generated</p>
         </div>
       </div>
 
-      {/* Pipeline */}
-      <div className="flex gap-3 overflow-x-auto pb-2">
-        {stages.map((stage, stageIndex) => (
-          <div key={stage.name} className="flex-1 min-w-[160px]">
-            {/* Stage header */}
-            <div className="flex items-center gap-2 mb-3">
-              <div className={`w-2 h-2 rounded-full ${stage.color}`} />
-              <span className="text-xs font-medium text-gray-700">{stage.name}</span>
-              <span className="text-xs text-gray-400">{stage.goals}</span>
-            </div>
-            
-            {/* Goals in stage */}
-            <div className="space-y-2">
-              {mockGoals
-                .filter(g => g.stage === stageIndex)
-                .map((goal, i) => (
-                  <div
-                    key={i}
-                    className="bg-gray-50 rounded-lg p-3 text-xs text-gray-700 border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all cursor-pointer"
-                  >
-                    {goal.title}
-                  </div>
-                ))}
-            </div>
+      <div className="space-y-3">
+        <div className="bg-violet-50 rounded-lg p-3">
+          <p className="text-[10px] font-semibold text-violet-700 uppercase tracking-wide mb-1">Overview</p>
+          <p className="text-xs text-violet-900 leading-relaxed">
+            Productive session on delegation. Sarah showed strong self-awareness about her tendency to micromanage.
+          </p>
+        </div>
+
+        <div>
+          <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wide mb-2">Key Topics</p>
+          <div className="flex flex-wrap gap-1.5">
+            {['Delegation', 'Trust', 'Team dynamics'].map((topic) => (
+              <span key={topic} className="text-[10px] bg-gray-100 text-gray-700 px-2 py-0.5 rounded">
+                {topic}
+              </span>
+            ))}
           </div>
+        </div>
+
+        <div>
+          <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wide mb-2">Action Items</p>
+          <div className="space-y-1.5">
+            {['Delegate Q2 report to James', 'Practice "ask don\'t tell" in 1:1s'].map((item, i) => (
+              <div key={i} className="flex items-start gap-2">
+                <CheckCircle className="w-3 h-3 text-green-500 mt-0.5 flex-shrink-0" />
+                <span className="text-xs text-gray-700">{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Analytics Preview
+function AnalyticsPreview() {
+  return (
+    <div className="bg-white rounded-xl shadow-2xl border border-gray-200 p-4">
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <p className="text-sm font-semibold text-gray-900">Analytics</p>
+          <p className="text-xs text-gray-500">Last 30 days</p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        {[
+          { label: 'Coachees', value: '12', color: 'blue' },
+          { label: 'Sessions', value: '28', color: 'violet' },
+          { label: 'Goals Progressed', value: '15', color: 'green' },
+          { label: 'Hours Coached', value: '42', color: 'amber' },
+        ].map((stat) => (
+          <div key={stat.label} className="bg-gray-50 rounded-lg p-2 text-center">
+            <p className="text-lg font-semibold text-gray-900">{stat.value}</p>
+            <p className="text-[10px] text-gray-500">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="h-16 flex items-end justify-around gap-1 px-2">
+        {[40, 65, 45, 80, 60, 75, 90].map((height, i) => (
+          <div
+            key={i}
+            className="flex-1 bg-gradient-to-t from-blue-500 to-violet-500 rounded-t"
+            style={{ height: `${height}%` }}
+          />
         ))}
       </div>
     </div>
   )
 }
 
-// Feature card component
-function FeatureCard({ 
+// Feature bucket component
+function FeatureBucket({ 
   icon: Icon, 
   title, 
   description, 
-  color 
+  features,
+  color
 }: { 
   icon: React.ElementType
   title: string
   description: string
-  color: string
+  features: string[]
+  color: 'blue' | 'violet' | 'emerald'
 }) {
-  const colorClasses: Record<string, string> = {
-    blue: 'bg-blue-100 text-blue-600',
-    violet: 'bg-violet-100 text-violet-600',
-    emerald: 'bg-emerald-100 text-emerald-600',
-    amber: 'bg-amber-100 text-amber-600',
+  const colorClasses = {
+    blue: { bg: 'bg-blue-100', text: 'text-blue-600', border: 'border-blue-200' },
+    violet: { bg: 'bg-violet-100', text: 'text-violet-600', border: 'border-violet-200' },
+    emerald: { bg: 'bg-emerald-100', text: 'text-emerald-600', border: 'border-emerald-200' },
   }
 
+  const colors = colorClasses[color]
+
   return (
-    <div className="group">
-      <div className={`w-10 h-10 rounded-lg ${colorClasses[color]} flex items-center justify-center mb-4`}>
-        <Icon className="w-5 h-5" />
+    <div className={`bg-white rounded-2xl border ${colors.border} p-6 h-full`}>
+      <div className={`w-12 h-12 rounded-xl ${colors.bg} ${colors.text} flex items-center justify-center mb-4`}>
+        <Icon className="w-6 h-6" />
       </div>
-      <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
-      <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
+      <h3 className="text-xl font-semibold text-gray-900 mb-2">{title}</h3>
+      <p className="text-gray-600 mb-4">{description}</p>
+      <ul className="space-y-2">
+        {features.map((feature, i) => (
+          <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
+            <CheckCircle className={`w-4 h-4 ${colors.text} flex-shrink-0 mt-0.5`} />
+            <span>{feature}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
@@ -124,252 +233,233 @@ export default function Home() {
   return (
     <div className="overflow-hidden">
       {/* Hero Section */}
-      <section className="relative pt-16 pb-24 lg:pt-24 lg:pb-32">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-white -z-10" />
-        
+      <section className="relative pt-12 pb-16 lg:pt-20 lg:pb-24 bg-gradient-to-b from-slate-50 to-white">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Left: Copy */}
-            <div className="max-w-xl">
-              <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 rounded-full px-3 py-1 text-sm font-medium mb-6">
-                <Sparkles className="w-4 h-4" />
-                <span>AI-powered coaching platform</span>
-              </div>
-              
-              <h1 className="text-4xl lg:text-5xl font-semibold text-gray-900 tracking-tight leading-tight mb-6">
-                Goals shouldn't just be done.{' '}
-                <span className="text-primary-600">They should become natural.</span>
-              </h1>
-              
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Most coaching software tracks whether goals are complete. Mentric tracks whether they're becoming second nature — because sustainable change is about transforming behaviours, not ticking boxes.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center rounded-lg bg-primary-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-primary-700 transition-colors"
-                >
-                  Get Started
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-                <Link
-                  href="/for-coaches"
-                  className="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 transition-colors"
-                >
-                  See How It Works
-                </Link>
-              </div>
-            </div>
-
-            {/* Right: Pipeline visualization */}
-            <div className="lg:pl-8">
-              <GoalPipeline />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Philosophy Section */}
-      <section className="py-20 lg:py-28 bg-white">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl font-semibold text-gray-900 mb-4">
-              A different philosophy of goal tracking
-            </h2>
-            <p className="text-lg text-gray-600">
-              Traditional coaching tools ask "is this goal done?". We ask "where is this person in their journey with this goal?" — because mastery happens in stages.
+          {/* Hero content */}
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h1 className="text-4xl lg:text-5xl font-semibold text-gray-900 tracking-tight leading-tight mb-6">
+              The coaching platform for 
+              <span className="text-blue-600"> lasting change</span>
+            </h1>
+            
+            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+              Help your coachees build habits that stick. Track goal progression, capture session insights with AI, and see the full picture of every coaching relationship.
             </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-700 transition-colors"
+              >
+                Get Started
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
+              <Link
+                href="/for-coaches"
+                className="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 transition-colors"
+              >
+                See How It Works
+              </Link>
+            </div>
           </div>
 
-          {/* Journey stages explanation */}
-          <div className="grid md:grid-cols-4 gap-8 lg:gap-12">
-            {[
-              {
-                stage: 'Committed',
-                icon: Target,
-                color: 'blue',
-                description: 'The coachee has committed to the goal. It takes conscious effort and deliberate practice.',
-              },
-              {
-                stage: 'Active',
-                icon: Zap,
-                color: 'violet',
-                description: 'The behaviour is becoming more consistent. Less resistance, but still requires attention.',
-              },
-              {
-                stage: 'Flowing',
-                icon: TrendingUp,
-                color: 'emerald',
-                description: 'The new behaviour feels natural in familiar contexts. Confidence is building.',
-              },
-              {
-                stage: 'Natural',
-                icon: CheckCircle,
-                color: 'amber',
-                description: 'The behaviour is now second nature. It happens automatically, even under pressure.',
-              },
-            ].map((item, index) => (
-              <div key={item.stage} className="relative">
-                {/* Connector line */}
-                {index < 3 && (
-                  <div className="hidden md:block absolute top-5 left-full w-full h-0.5 bg-gray-200 -z-10" />
-                )}
-                
-                <div className={`w-10 h-10 rounded-lg bg-${item.color}-100 text-${item.color}-600 flex items-center justify-center mb-4`}>
-                  <item.icon className="w-5 h-5" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.stage}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
+          {/* Hero images - overlapping cards */}
+          <div className="relative max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-4 lg:gap-6">
+              <div className="md:col-span-2">
+                <GoalPipelinePreview />
               </div>
-            ))}
+              <div className="space-y-4">
+                <SessionReportPreview />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 lg:py-28 bg-gray-50">
+      {/* Three Feature Buckets */}
+      <section className="py-16 lg:py-24 bg-white">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="max-w-3xl mb-16">
+          <div className="max-w-3xl mx-auto text-center mb-12">
             <h2 className="text-3xl font-semibold text-gray-900 mb-4">
               Everything you need to coach effectively
             </h2>
             <p className="text-lg text-gray-600">
-              Mentric brings together goal tracking, session management, AI insights, and analytics in one seamless platform.
+              Goals, sessions, and insights — all in one place.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
-            <FeatureCard
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+            <FeatureBucket
               icon={Target}
-              title="Dynamic Goal Journeys"
-              description="Create custom journey stages for each coachee. Track progression through stages, not just completion percentages."
+              title="Goal Journeys"
+              description="Track not just what goals are done, but where each coachee is in their journey with each goal."
+              features={[
+                'Visual pipeline with custom stages',
+                'Drag-and-drop goal progression',
+                'Confidence tracking over time',
+                'Milestone celebrations'
+              ]}
               color="blue"
             />
-            <FeatureCard
+            <FeatureBucket
               icon={Calendar}
-              title="Session Management"
-              description="Book sessions, sync with Zoom and Teams, and keep everything organised in one place. No more juggling calendars."
+              title="Sessions"
+              description="Book, run, and document coaching sessions without the admin headache."
+              features={[
+                'Zoom and Teams integration',
+                'AI-powered transcription',
+                'Automatic session summaries',
+                'Action item tracking'
+              ]}
               color="violet"
             />
-            <FeatureCard
-              icon={Sparkles}
-              title="AI Session Intelligence"
-              description="Automatically transcribe sessions and generate insights, action items, and summaries. Your AI-powered coaching assistant."
-              color="emerald"
-            />
-            <FeatureCard
+            <FeatureBucket
               icon={BarChart3}
-              title="Coaching Analytics"
-              description="See the full picture with dashboards that show progress across all your coachees, sessions, and goals."
-              color="amber"
-            />
-            <FeatureCard
-              icon={MessageSquare}
-              title="In-App Messaging"
-              description="Keep conversations with coachees in context. Share resources, check in between sessions, and maintain momentum."
-              color="blue"
-            />
-            <FeatureCard
-              icon={FileText}
-              title="Resource Sharing"
-              description="Build your library of coaching resources and share them with coachees at exactly the right moment."
-              color="violet"
+              title="Insights"
+              description="See the full picture with analytics that show what's actually working."
+              features={[
+                'Progress dashboards',
+                'Coaching hours tracking',
+                'Goal stage distribution',
+                'Coachee engagement metrics'
+              ]}
+              color="emerald"
             />
           </div>
         </div>
       </section>
 
-      {/* Social Proof / Stats Section */}
-      <section className="py-20 lg:py-28 bg-white">
+      {/* How it works - Goal Journey explanation */}
+      <section className="py-16 lg:py-24 bg-slate-50">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div>
-              <h2 className="text-3xl font-semibold text-gray-900 mb-6">
-                Built for coaches who believe in lasting change
-              </h2>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Whether you're an independent coach building your practice or an organisation running coaching programmes at scale, Mentric gives you the tools to make every coaching relationship count.
-              </p>
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-3xl font-semibold text-gray-900 mb-4">
+              Goals move through stages
+            </h2>
+            <p className="text-lg text-gray-600">
+              Sustainable change happens in stages. Mentric tracks where each coachee is in their journey — from first commitment to natural habit.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-5 gap-4 lg:gap-6 max-w-4xl mx-auto">
+            {[
+              { name: 'Curious', icon: Lightbulb, color: 'blue', desc: 'Exploring the idea' },
+              { name: 'Committed', icon: Target, color: 'purple', desc: 'Ready to work on it' },
+              { name: 'Active', icon: Zap, color: 'amber', desc: 'Practising consistently' },
+              { name: 'Flowing', icon: Heart, color: 'pink', desc: 'Becoming easier' },
+              { name: 'Natural', icon: Trophy, color: 'green', desc: 'Second nature' },
+            ].map((stage, i) => {
+              const colorMap: Record<string, string> = {
+                blue: 'bg-blue-100 text-blue-600',
+                purple: 'bg-purple-100 text-purple-600',
+                amber: 'bg-amber-100 text-amber-600',
+                pink: 'bg-pink-100 text-pink-600',
+                green: 'bg-green-100 text-green-600',
+              }
               
-              <div className="space-y-4">
-                {[
-                  'Track the journey, not just the destination',
-                  'AI that augments your coaching, never replaces it',
-                  'One platform for sessions, goals, and insights',
-                  'Beautiful, intuitive interface you\'ll enjoy using',
-                ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <CheckCircle className="w-3 h-3" />
-                    </div>
-                    <span className="text-gray-700">{item}</span>
+              return (
+                <div key={stage.name} className="text-center">
+                  <div className={`w-12 h-12 rounded-xl ${colorMap[stage.color]} flex items-center justify-center mx-auto mb-3`}>
+                    <stage.icon className="w-6 h-6" />
                   </div>
-                ))}
+                  <h3 className="font-semibold text-gray-900 mb-1 text-sm lg:text-base">{stage.name}</h3>
+                  <p className="text-xs lg:text-sm text-gray-500">{stage.desc}</p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* AI Features Section */}
+      <section className="py-16 lg:py-24 bg-white">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 bg-violet-100 text-violet-700 rounded-full px-3 py-1 text-sm font-medium mb-4">
+                <Sparkles className="w-4 h-4" />
+                <span>AI-powered</span>
               </div>
+              <h2 className="text-3xl font-semibold text-gray-900 mb-4">
+                Let AI handle the notes
+              </h2>
+              <p className="text-lg text-gray-600 mb-6">
+                Connect Fireflies to automatically transcribe your sessions. Mentric's AI generates summaries, extracts action items, and captures key insights — so you can be fully present in the conversation.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  'Automatic session transcription',
+                  'AI-generated summaries and key points',
+                  'Action items extracted and tracked',
+                  'Talk time analysis',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-violet-600 flex-shrink-0" />
+                    <span className="text-gray-700">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <AnalyticsPreview />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* For Coaches & Organisations */}
+      <section className="py-16 lg:py-24 bg-slate-50">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* For Coaches */}
+            <div className="bg-white rounded-2xl p-8 border border-gray-200">
+              <div className="w-12 h-12 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center mb-4">
+                <Users className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">For Coaches</h3>
+              <p className="text-gray-600 mb-6">
+                Stop juggling spreadsheets and calendars. Get everything about each client in one place, with AI doing the admin work.
+              </p>
+              <Link
+                href="/for-coaches"
+                className="inline-flex items-center text-violet-600 font-medium hover:text-violet-700"
+              >
+                Learn more
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
             </div>
 
-            {/* Mock session completion UI */}
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-lg bg-violet-100 text-violet-600 flex items-center justify-center">
-                  <Sparkles className="w-4 h-4" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-900">Session Complete</p>
-                  <p className="text-xs text-gray-500">AI insights generated</p>
-                </div>
+            {/* For Organisations */}
+            <div className="bg-white rounded-2xl p-8 border border-gray-200">
+              <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4">
+                <BarChart3 className="w-6 h-6" />
               </div>
-
-              <div className="space-y-4">
-                <div className="bg-blue-50 rounded-lg p-4">
-                  <p className="text-xs font-medium text-blue-700 mb-2">Session Overview</p>
-                  <p className="text-sm text-blue-900">
-                    Productive session focused on delegation challenges. Sarah showed strong self-awareness about her tendency to micromanage and identified specific triggers.
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-xs font-medium text-gray-700 mb-2">Key Topics</p>
-                  <div className="flex flex-wrap gap-2">
-                    {['Delegation', 'Trust', 'Team dynamics', 'Letting go'].map((topic) => (
-                      <span key={topic} className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs text-gray-700">
-                        {topic}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <p className="text-xs font-medium text-gray-700 mb-2">Action Items</p>
-                  <div className="space-y-2">
-                    {[
-                      'Delegate the Q2 report entirely to James',
-                      'Practice the "ask, don\'t tell" approach in 1:1s',
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-start gap-2">
-                        <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                        <span className="text-sm text-gray-700">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">For Organisations</h3>
+              <p className="text-gray-600 mb-6">
+                Run coaching programmes at scale with the visibility you need. Manage coaches, track outcomes, and prove ROI.
+              </p>
+              <Link
+                href="/for-organisations"
+                className="inline-flex items-center text-blue-600 font-medium hover:text-blue-700"
+              >
+                Learn more
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 lg:py-28 bg-gray-900">
+      <section className="py-16 lg:py-24 bg-gray-900">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-3xl font-semibold text-white mb-4">
-              Ready to transform your coaching practice?
+              Ready to transform your coaching?
             </h2>
             <p className="text-lg text-gray-400 mb-8">
-              Join coaches and organisations who are making lasting change possible with Mentric.
+              Join coaches and organisations who are making lasting change possible.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -380,11 +470,11 @@ export default function Home() {
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
               <Link
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-lg border border-gray-700 px-6 py-3 text-base font-medium text-white hover:bg-gray-800 transition-colors"
-            >
-              Talk to Us
-            </Link>
+                href="/about"
+                className="inline-flex items-center justify-center rounded-lg border border-gray-700 px-6 py-3 text-base font-medium text-white hover:bg-gray-800 transition-colors"
+              >
+                Learn More About Us
+              </Link>
             </div>
           </div>
         </div>
